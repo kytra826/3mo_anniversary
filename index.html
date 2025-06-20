@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our Anniversary 💖</title>
+
+<style>
+  /* RESET */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a001f;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Starfield Canvas */
+  #starfield {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -2;
+    background: radial-gradient(ellipse at bottom, #15002a 0%, #000010 100%);
+  }
+
+  /* Floating hearts */
+  #heart-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    overflow: visible;
+    z-index: -1;
+  }
+
+  /* Hero */
+  .hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #4b006e, #a700b3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    animation: fadeInSlideDown 2s ease forwards;
+  }
+  .hero h1 {
+    font-size: 3.8rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px #ff6fcc;
+    animation: twinkleAnim 3s infinite ease-in-out;
+  }
+  .hero p {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 6px #ff6fcc99;
+  }
+  .hero button {
+    background: #ff54a4;
+    border: none;
+    border-radius: 40px;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff54a4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hero button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #ff54a4;
+  }
+
+  /* Gallery */
+  .gallery {
+    padding: 60px 20px;
+    background: #1c003f;
+    text-align: center;
+    animation: fadeIn 2s ease forwards;
+  }
+  .gallery h2 {
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px #ff54a4aa;
+  }
+  #photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  #photos img {
+    max-width: 280px;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #ff54a4bb;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+  }
+  #photos img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px #ff54a4dd;
+  }
+
+  /* Map Section */
+  .map-section {
+    padding: 60px 20px;
+    background: #2a0053;
+    text-align: center;
+  }
+  .map-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #ff54a4aa;
+  }
+  #map-frame {
+    width: 90vw;
+    max-width: 900px;
+    height: 400px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #ff54a4bb;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Love Letter */
+  .love-letter {
+    background: #300030;
+    padding: 50px 20px;
+    text-align: center;
+    animation: fadeIn 2s ease forwards;
+  }
+  .love-letter h2 {
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px #ff54a4aa;
+    animation: twinkleAnim 3s infinite ease-in-out;
+  }
+  .love-letter p {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 25px;
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+  .love-letter p.hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .love-letter button {
+    background: #ff54a4;
+    border: none;
+    border-radius: 40px;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff54a4;
+    transition: background 0.3s ease;
+  }
+  .love-letter button:hover {
+    background: #ff85c2;
+  }
+
+  /* Animations */
+  @keyframes fadeInSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes twinkleAnim {
+    0%, 100% {
+      text-shadow: 0 0 5px #ff85c1, 0 0 10px #ff54a4;
+    }
+    50% {
+      text-shadow: 0 0 20px #ff3d8a, 0 0 30px #ff1a6b;
+    }
+  }
+
+  /* Floating hearts animation */
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    color: #ff54a4;
+    opacity: 0.8;
+    animation: floatUp 7s linear forwards;
+    pointer-events: none;
+  }
+
+  #toggle-letter:hover {
+    transform: scale(1.1) rotate(-2deg);
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-150vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  /* Glowing text animation */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #ff85c1, 0 0 10px #ff54a4;
+  }
+  50% {
+    text-shadow: 0 0 20px #ff3d8a, 0 0 30px #ff1a6b;
+  }
+  100% {
+    text-shadow: 0 0 5px #ff85c1, 0 0 10px #ff54a4;
+  }
+}
+
+#letter-text {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px;
+  transition: opacity 1s ease;
+  animation: glow 2s infinite ease-in-out;
+}
+
+#letter-text.hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#letter-text {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+</style>
+
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div id="heart-container"></div>
+
+<header class="hero">
+  <h1>Happy 3 months Anniversary, Babe 💖</h1>
+  <p>Mình quen nhau mới có 3 tháng thôi mà tưởng đã quen nhau lâu lắm rồi.</p>
+  <button onclick="scrollToSection('gallery')">Ai vậy ta?</button>
+</header>
+
+<section id="gallery" class="gallery">
+  <h2>Bạn gái anh chứ ai</h2>
+  <div id="photos"></div>
+</section>
+
+<section id="map-section" class="map-section">
+  <h2>Nơi mình bắt đầu</h2>
+  <!-- Embedded OpenStreetMap iframe -->
+  <iframe
+    id="map-frame"
+    src=""
+    loading="lazy"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+</section>
+
+<section id="love-letter" class="love-letter">
+  <h2>My Love Letter</h2>
+  <img id="toggle-letter" src="images/love-letter.png" alt="Love Letter" style="width: 200px; cursor: pointer; transition: transform 0.3s ease;" />
+  <p id="letter-text" class="hidden">
+    Since the day we met, my world changed forever.<br />
+    Thank you for every smile, every moment.<br />
+    I love you endlessly. ❤️
+  </p>
+</section>
+
+<script>
+  // Smooth scroll to section by id
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Reveal love letter text on button click
+ const toggleLetterImg = document.getElementById('toggle-letter');
+toggleLetterImg.addEventListener('click', (e) => {
+  const letter = document.getElementById('letter-text');
+  letter.classList.toggle('hidden');
+
+  // Get image position
+  const rect = toggleLetterImg.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+
+  // Trigger firework at image center
+  createFirework(x, y);
+});
+
+  // Starfield Animation
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.2,
+      speedX: (Math.random() - 0.5) * 0.2,
+      speedY: (Math.random() - 0.5) * 0.2,
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.shadowColor = 'white';
+      ctx.shadowBlur = 6;
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      star.x += star.speedX;
+      star.y += star.speedY;
+
+      if (star.x < 0 || star.x > canvas.width) star.speedX *= -1;
+      if (star.y < 0 || star.y > canvas.height) star.speedY *= -1;
+    });
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+
+  // Floating Hearts Generator
+  const heartContainer = document.getElementById('heart-container');
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (12 + Math.random() * 24) + 'px';
+    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 8000);
+  }
+  setInterval(createHeart, 500);
+
+  // Load images dynamically from folder
+  const photoContainer = document.getElementById('photos');
+  const imageNames = ['img1.jpg', 'img2.jpg', 'img3.jpg']; // Put your actual image filenames here
+
+  imageNames.forEach(name => {
+    const img = document.createElement('img');
+    img.src = `images/${name}`;
+    img.alt = 'Anniversary Memory';
+    photoContainer.appendChild(img);
+  });
+
+  // Fireworks effect on click
+  const fireworks = [];
+  document.body.addEventListener('click', e => {
+    createFirework(e.clientX, e.clientY);
+  });
+
+  function createFirework(x, y) {
+    const colors = ['#ff69b4', '#ff85c1', '#ff4d94', '#ff1a75', '#ffb3cc'];
+    for (let i = 0; i < 30; i++) {
+      const firework = {
+        x,
+        y,
+        radius: 2 + Math.random() * 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        dx: (Math.random() - 0.5) * 8,
+        dy: (Math.random() - 0.5) * 8,
+        alpha: 1,
+        decay: 0.02 + Math.random() * 0.03,
+      };
+      fireworks.push(firework);
+    }
+  }
+
+  function animateFireworks() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawStars();
+
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      const f = fireworks[i];
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(${hexToRgb(f.color)},${f.alpha})`;
+      ctx.fill();
+
+      f.x += f.dx;
+      f.y += f.dy;
+      f.alpha -= f.decay;
+
+      if (f.alpha <= 0) fireworks.splice(i, 1);
+    }
+
+    requestAnimationFrame(animateFireworks);
+  }
+
+  function hexToRgb(hex) {
+    const bigint = parseInt(hex.replace('#', ''), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `${r},${g},${b}`;
+  }
+  animateFireworks();
+
+  // Setup OpenStreetMap iframe URL for your special location
+  // Replace these coordinates with your special place latitude and longitude
+  const lat = 32.637545;   // Example: New York City
+  const lon = -97.186829;
+
+  const zoom = 15;
+  const mapFrame = document.getElementById('map-frame');
+
+  // OpenStreetMap iframe embed URL format:
+  // https://www.openstreetmap.org/export/embed.html?bbox={lonLeft}%2C{latBottom}%2C{lonRight}%2C{latTop}&layer=mapnik&marker={lat}%2C{lon}
+  // We calculate a small bbox around the point for viewport
+
+  const delta = 0.01; // ~1km bbox margin
+
+  const bboxLeft = lon - delta;
+  const bboxRight = lon + delta;
+  const bboxTop = lat + delta;
+  const bboxBottom = lat - delta;
+
+  const src = `https://www.openstreetmap.org/export/embed.html?bbox=${bboxLeft}%2C${bboxBottom}%2C${bboxRight}%2C${bboxTop}&layer=mapnik&marker=${lat}%2C${lon}`;
+
+  mapFrame.src = src;
+</script>
+
+</body>
+</html>
